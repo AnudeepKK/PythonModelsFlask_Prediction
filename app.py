@@ -63,7 +63,6 @@ def predict_gdm():
     "Sys BP": [data["Sys BP"]],
     "Dia BP": [data["Dia BP"]],
     "Hemoglobin": [data["Hemoglobin"]],
-    "Prediabetes": [data["Prediabetes"]],
 })
     
     # Standardize the new data point using the previously fitted scaler
@@ -124,6 +123,38 @@ def predict_anemia():
     
     # Return the predicted result
     return jsonify({"prediction": int(prediction[0])})
+
+
+# Route to receive sample data and return top 5 similar data points
+@app.route('/find_similar', methods=['POST'])
+def find_similar():
+    request_data = request.get_json()
+    if not request_data:
+        return jsonify({"error": "No data provided"}), 400
+    
+    if 'sample_data' not in request_data:
+        return jsonify({"error": "Sample data not provided"}), 400
+
+    sample_data = request_data['sample_data']
+    new_data = sample_data[-1]  # Take the last item as the new data
+
+    # Function to calculate similarity between two data points
+    def calculate_similarity(data1, data2):
+        similarity_score = sum((data1[key] - data2[key])**2 for key in data1.keys() if key != "id")
+        return similarity_score
+
+    # Calculate similarity scores for all sample data points except the last one (which is the new data)
+    similarity_scores = []
+    for data_point in sample_data[:-1]:
+        similarity_score = calculate_similarity(new_data, data_point)
+        similarity_scores.append((data_point, similarity_score))
+
+    # Sort by similarity score and get top 5
+    sorted_similarity_scores = sorted(similarity_scores, key=lambda x: x[1])
+    top_5_similar_data = [{ "data": data[0]} for data in sorted_similarity_scores[:5]]
+
+    return jsonify(top_5_similar_data)
+
 
 
 if __name__ == '__main__':

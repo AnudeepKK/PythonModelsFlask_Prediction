@@ -11,7 +11,6 @@ new_data_point = pd.DataFrame({
     "Sys BP": [139],
     "Dia BP": [80],
     "Hemoglobin": [12.8],
-    "Prediabetes": [1],
 })
 
 # Standardize the new data point using the previously fitted scaler
