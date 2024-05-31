@@ -5,7 +5,7 @@ from sklearn.preprocessing import StandardScaler
 import joblib
 
 # Read the CSV file
-data = pd.read_csv("AnemiaCleaned.csv")
+data = pd.read_csv("Datasets/AnemiaCleaned.csv")
 
 # Remove rows with any missing values
 cleaned_data = data.dropna()

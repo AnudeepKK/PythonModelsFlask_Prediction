@@ -5,7 +5,7 @@ from sklearn.preprocessing import LabelEncoder
 import joblib
 
 # Read the CSV file
-data = pd.read_csv("Maternal Health Risk Data Set.csv")
+data = pd.read_csv("Datasets/Maternal Health Risk Data Set.csv")
 
 # Encoding the target variable
 label_encoder = LabelEncoder()

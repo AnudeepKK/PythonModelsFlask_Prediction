@@ -22,7 +22,7 @@ def preprocess_data(df):
     return X_scaled, scaler, imputer
 
 # Read data from the CSV file
-data = pd.read_csv('Maternal Health Risk Data Set.csv')
+data = pd.read_csv('Datasets/Maternal Health Risk Data Set.csv')
 
 # Preprocess the data
 X_scaled, scaler, imputer = preprocess_data(data)
